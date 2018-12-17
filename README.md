@@ -58,7 +58,7 @@
 
 #### Syntax Highlighting in Atom
 
-- Install the language-ethereum plugin in Atom
+- Install the 'language-ethereum' plugin in Atom
 
 
 
