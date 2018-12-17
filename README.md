@@ -56,6 +56,10 @@
 - compile.js - small script that compiles the contract in the contracts folder
 - deploy.js - small script that takes the compiled code and deploys it to the Rinkeby N/W
 
+#### Syntax Highlighting in Atom
+
+- Install the language-ethereum plugin in Atom
+
 
 
 
