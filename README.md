@@ -17,29 +17,39 @@
 
 - Open your terminal
 - Create a new directory
-    mkdir inbox
+
+      mkdir inbox
+      
 - Change into the directory
-    cd inbox
+
+      cd inbox
+      
 - Initialize a node project
-    npm init
-    {Hit enter a few times to accept the defaults}
+
+      npm init
+      {Hit enter a few times to accept the defaults}
+      
 - You should see a new 'package.json' file
-    ls
-    {package.json}
+
+      ls
+      {package.json}
 
 #### Project File Walkthrough
 
 - Open Atom code editor in the Inbox directory
-    atom .
+
+      atom .
+      
 - Create the following directory structure:
-    contracts 
-      Inbox.sol {Copy the Inbox.sol code from Remix here}
-    test
-      Inbox.test.js
-    package.json {Already exists}
-    compile.js
-    deploy.js
-    
+
+      contracts 
+        Inbox.sol {Copy the Inbox.sol code from Remix here}
+      test
+        Inbox.test.js
+      package.json {Already exists}
+      compile.js
+      deploy.js
+     
 - contracts - contains the contract source
 - test - contains a file with Mocha code to test out the contract
 - package.json - records all dependencies in the project
