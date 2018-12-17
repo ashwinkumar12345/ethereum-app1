@@ -16,27 +16,27 @@
 #### Create a new project
 
 - Open your terminal
-- Create a new directory
+- Create a new directory:
 
       mkdir inbox
       
-- Change into the directory
+- Change into the directory:
 
       cd inbox
       
-- Initialize a node project
+- Initialize a node project:
 
       npm init
       {Hit enter a few times to accept the defaults}
       
-- You should see a new 'package.json' file
+- You should see a new 'package.json' file:
 
       ls
       {package.json}
 
 #### Project File Walkthrough
 
-- Open Atom code editor in the Inbox directory
+- Open Atom code editor in the Inbox directory:
 
       atom .
       
