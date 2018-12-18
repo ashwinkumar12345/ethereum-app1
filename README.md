@@ -103,7 +103,46 @@
  
        module.exports = solc.compile(source, 1).contracts[':Inbox'];
        
+#### Testing Architecture
+
+- Take the bytecode from the Solidity compiler and deploy it to a local test Ethereum N/W
+- The local test N/W is created by a library called Ganache
+- Take the ABI and feed it to web3
+- web3 is the portal into the test Ethereum N/W
+
+#### Installing Testing Modules
+
+- Open your terminal in the Inbox directory
+ 
+       npm install --save mocha ganache-cli web3@1.0.0-beta.35
+
+- Open the Inbox.test.js file and import the following:
+ 
+       const assert = require('assert');
+       const ganache = require('ganache-cli');
+       const Web3 = require('web3'); //Web3 is a constructor function so it's uppercase
+
+#### Web3 Providers
+
+- Web3 is the constructor function
+- Use Web3 to create an instance 'web3'
+- Setup the provider
+- Provider is the communication layer between the web3 library and Ethereum N/W (Ganache)
+- Provider has a specific set of methods that allow the web3 library to send a request to a local N/W and recieve a request from the N/W
+- web3 will always communicate to an Ethereum N/W through a provider
+- web3 will always expect you to provide a 'provider'
+- Without a provider, web3 will have no idea what N/W to connect to
+- Open the Inbox.test.js file and add the provider
+- The provider is connecting to the ganache (local) N/W
+- To connect to the Rinkeby test N/W, replace the ganache provider with the Rinkeby provider
+
+ 
+       const web3 = new Web3(ganache.provider());
+
+
        
+
+
 
  
  
