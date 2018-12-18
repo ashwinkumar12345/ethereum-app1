@@ -2,18 +2,18 @@
 
 ## Interacting with Ethereum
 
-#### Contract Deployment 
+> ## Contract Deployment 
 
 - Create a custom node project from scratch
 - This project is used for contract creation, local testing, and deployment to the Rinkeby N/W
 
-#### Boilerplate Design Goals
+> ## Boilerplate Design Goals
 
 - Need to write Solidity code in a Javascript project: Setup a Solidity compiler to output the ABI
 - Need to rapidly test contracts in an automated way: Setup Mocha test runner 
 - Need to deploy the contract to a public N/W (Rinkeby): Setup a deploy script to compile the contract and take the compiled bytecode and deploy it to the Rinkeby N/W
 
-#### Create a new project
+> ## Create a new project
 
 - Open your terminal
 - Create a new directory:
@@ -34,7 +34,7 @@
       ls
       {package.json}
 
-#### Project File Walkthrough
+> ## Project File Walkthrough
 
 - Open Atom code editor in the Inbox directory:
 
@@ -56,11 +56,11 @@
 - compile.js - small script that compiles the contract in the contracts folder
 - deploy.js - small script that takes the compiled code and deploys it to the Rinkeby N/W
 
-#### Syntax Highlighting in Atom
+> ## Syntax Highlighting in Atom
 
 - Install the 'language-ethereum' plugin in Atom
 
-#### Compile script
+> ## Compile script
 
 - First start with the compile script because both deploying and testing require a compiled contract
 - Pass the contract source to the compiler to output the ABI and bytecode
@@ -103,14 +103,14 @@
  
        module.exports = solc.compile(source, 1).contracts[':Inbox'];
        
-#### Testing Architecture
+> ## Testing Architecture
 
 - Take the bytecode from the Solidity compiler and deploy it to a local test Ethereum N/W
 - The local test N/W is created by a library called Ganache
 - Take the ABI and feed it to web3
 - web3 is the portal into the test Ethereum N/W
 
-#### Installing Testing Modules
+> ## Installing Testing Modules
 
 - Open your terminal in the Inbox directory
  
@@ -122,7 +122,7 @@
        const ganache = require('ganache-cli');
        const Web3 = require('web3'); //Web3 is a constructor function so it's uppercase
 
-#### Web3 Providers
+> ## Web3 Providers
 
 - Web3 is the constructor function
 - Use Web3 to create an instance 'web3'
@@ -135,12 +135,67 @@
 - Open the Inbox.test.js file and add the provider
 - The provider is connecting to the ganache (local) N/W
 - To connect to the Rinkeby test N/W, replace the ganache provider with the Rinkeby provider
-
  
        const web3 = new Web3(ganache.provider());
 
+> ## Testing With Mocha
 
+- Mocha is a general-purpose test running framework
+- Mocha has 3 main functions
+     - it - Run one individual assertion 
+     - describe - Group together 'it' functions (testing the same class)
+     - beforeEach - Execute some general setup code
+- Sample class
+ 
+       class Car {
+         park(){
+            return 'stopped';
+            }
+         drive(){
+            return 'vroom';
+            }
+       }
        
+- Sample Mocha test code
+ 
+       describe('Car', () => {
+        it('can park', () => {
+            const car = new Car();
+            assert.equal(car.park(), 'stopped');
+        });
+       })
+ 
+- Open package.json file
+ 
+       "scripts":{
+        "test":"mocha"
+        }
+        
+ - Open your terminal and run
+  
+       npm run test
+       
+ - You can see the sample test pass
+ - Create a second 'it' statement
+ 
+         it('can drive', () => {
+            const car = new Car();
+            assert.equal(car.drive(), 'vroom');
+        });
+        
+ - Open your terminal and run
+  
+       npm run test
+       
+ - You can see both the sample tests pass 
+ - To avoid duplication, use the beforeEach call
+  
+         let car;
+         beforeEach(() => {
+           car = new Car(); 
+        });
+      
+ - Remove 'const car = new Car();' from the 'it' statements
 
 
 
