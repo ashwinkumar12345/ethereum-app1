@@ -11,7 +11,7 @@
 
 - Need to write Solidity code in a Javascript project: Setup a Solidity compiler to output the ABI
 - Need to rapidly test contracts in an automated way: Setup Mocha test runner 
-- Need to deploy the contract to a public N/W (Rinkeby) - Setup a deploy script to compile the contract and take the compiled bytecode and deploy it to the Rinkeby N/W
+- Need to deploy the contract to a public N/W (Rinkeby): Setup a deploy script to compile the contract and take the compiled bytecode and deploy it to the Rinkeby N/W
 
 #### Create a new project
 
