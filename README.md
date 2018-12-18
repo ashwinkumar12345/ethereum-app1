@@ -60,6 +60,63 @@
 
 - Install the 'language-ethereum' plugin in Atom
 
+#### Compile script
+
+- First start with the compile script because both deploying and testing require a compiled contract
+- We will pass the contract source to the compiler to output the ABI and bytecode
+- Install the Solidity compiler:
+
+      npm install --save solc
+      
+- We need to access the Inbox.sol file from compile.js
+- For this, we need to read the contents of the Inbox.sol file from the harddrive
+- For OS cross compatibility, build a directory path from compile.js to Inbox.sol using the 'path' module
+
+      const path = require('path');
+      const fs = require('fs');
+      const solc = require('solc');
+      
+      const inboxPath = path.resolve(__dirname, 'contracts', 'Inbox.sol');
+      const source = fs.readFileSync(inboxpath, 'utf-8');
+      
+      console.log(solc.compile(source, 1)); //This logs the compiled output
+      
+ - Open the terminal inside the inbox directory and run:
+ 
+       node compile.js
+       
+ - You will see a console log on the screen
+ - The return value from the compiler is an object
+ - Scroll all the way to the top 
+  
+       { contracts:
+         {  ':Inbox':
+           { assembly:[Object],
+             bytecode: '....'
+             ..
+             interface: '[{...}]'
+            
+- You could have multiple contracts compiled 
+- bytecode is the actual raw machine code to deploy to the Rinkeby N/W
+- interface is the contract ABI (communication layer between Solidity and Javascript)
+- ABI lists all the different functions that can be called by the contract
+- You can remove 'console.log' from the compile.js file
+- We need to make the compile output available to other files in our project
+ 
+       module.exports = solc.compile(source, 1).contracts[':Inbox'];
+       
+       
+
+ 
+ 
+      
+ 
+
+            
+      
+
+            
+
 
 
 
