@@ -20,7 +20,7 @@
 
       mkdir inbox
       
-- Change into the directory:
+- Change into that directory:
 
       cd inbox
       
@@ -63,13 +63,12 @@
 #### Compile script
 
 - First start with the compile script because both deploying and testing require a compiled contract
-- We will pass the contract source to the compiler to output the ABI and bytecode
+- Pass the contract source to the compiler to output the ABI and bytecode
 - Install the Solidity compiler:
 
       npm install --save solc
       
-- We need to access the Inbox.sol file from compile.js
-- For this, we need to read the contents of the Inbox.sol file from the harddrive
+- To access the Inbox.sol file from compile.js, read the contents of the Inbox.sol file from the harddrive
 - For OS cross compatibility, build a directory path from compile.js to Inbox.sol using the 'path' module
 
       const path = require('path');
@@ -96,12 +95,11 @@
              ..
              interface: '[{...}]'
             
-- You could have multiple contracts compiled 
 - bytecode is the actual raw machine code to deploy to the Rinkeby N/W
 - interface is the contract ABI (communication layer between Solidity and Javascript)
 - ABI lists all the different functions that can be called by the contract
-- You can remove 'console.log' from the compile.js file
-- We need to make the compile output available to other files in our project
+- You can remove 'console.log' from the 'compile.js' file
+- To make the compile output available to other files in our project, change the compile line to:
  
        module.exports = solc.compile(source, 1).contracts[':Inbox'];
        
