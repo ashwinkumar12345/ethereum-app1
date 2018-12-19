@@ -1,7 +1,5 @@
 # ethereum-app1
 
-## Interacting with Ethereum
-
 > ## Contract Deployment 
 
 - Create a custom node project from scratch
@@ -53,12 +51,12 @@
 - contracts - contains the contract source
 - test - contains a file with Mocha code to test out the contract
 - package.json - records all dependencies in the project
-- compile.js - small script that compiles the contract in the contracts folder
-- deploy.js - small script that takes the compiled code and deploys it to the Rinkeby N/W
+- compile.js - a small script that compiles the contract in the contracts folder
+- deploy.js - a small script that takes the compiled code and deploys it to the Rinkeby N/W
 
 > ## Syntax Highlighting in Atom
 
-- Install the 'language-ethereum' plugin in Atom
+- Install 'language-ethereum' plugin in Atom
 
 > ## Compile script
 
@@ -68,7 +66,7 @@
 
       npm install --save solc
       
-- To access the Inbox.sol file from compile.js, read the contents of the Inbox.sol file from the harddrive
+- To access the Inbox.sol file from compile.js, you need to read the contents of the Inbox.sol file from the harddrive
 - For OS cross compatibility, build a directory path from compile.js to Inbox.sol using the 'path' module
 
       const path = require('path');
@@ -86,7 +84,7 @@
        
  - You will see a console log on the screen
  - The return value from the compiler is an object
- - Scroll all the way to the top 
+ - Scroll all the way to the top, you will see: 
   
        { contracts:
          {  ':Inbox':
@@ -95,19 +93,20 @@
              ..
              interface: '[{...}]'
             
-- bytecode is the actual raw machine code to deploy to the Rinkeby N/W
-- interface is the contract ABI (communication layer between Solidity and Javascript)
-- ABI lists all the different functions that can be called by the contract
-- You can remove 'console.log' from the 'compile.js' file
+      - `bytecode` is the actual raw machine code to deploy to the Rinkeby N/W
+      - `interface` is the contract ABI (communication layer between Solidity and Javascript)
+      - `ABI` lists all the different functions that can be called by the contract
+      
+- You can remove `console.log` from the `compile.js` file
 - To make the compile output available to other files in our project, change the compile line to:
  
        module.exports = solc.compile(source, 1).contracts[':Inbox'];
        
 > ## Testing Architecture
 
-- Take the bytecode from the Solidity compiler and deploy it to a local test Ethereum N/W
+- We need to take the bytecode from the Solidity compiler and deploy it to a local test Ethereum N/W
 - The local test N/W is created by a library called Ganache
-- Take the ABI and feed it to web3
+- We need to take the ABI and feed it to web3
 - web3 is the portal into the test Ethereum N/W
 
 > ## Installing Testing Modules
@@ -116,7 +115,7 @@
  
        npm install --save mocha ganache-cli web3@1.0.0-beta.35
 
-- Open the Inbox.test.js file and import the following:
+- Open the `Inbox.test.js` file and import the following:
  
        const assert = require('assert');
        const ganache = require('ganache-cli');
@@ -125,23 +124,23 @@
 > ## Web3 Providers
 
 - Web3 is the constructor function
-- Use Web3 to create an instance 'web3'
+- Use Web3 to create an instance `web3`
 - Setup the provider
 - Provider is the communication layer between the web3 library and Ethereum N/W (Ganache)
 - Provider has a specific set of methods that allow the web3 library to send a request to a local N/W and recieve a request from the N/W
 - web3 will always communicate to an Ethereum N/W through a provider
 - web3 will always expect you to provide a 'provider'
 - Without a provider, web3 will have no idea what N/W to connect to
-- Open the Inbox.test.js file and add the provider
+- Open the `Inbox.test.js` file and add the provider
 - The provider is connecting to the ganache (local) N/W
 - To connect to the Rinkeby test N/W, replace the ganache provider with the Rinkeby provider
  
        const web3 = new Web3(ganache.provider());
 
-> ## Testing With Mocha
+> ## Intro to Mocha
 
 - Mocha is a general-purpose test running framework
-- Mocha has 3 main functions
+- Mocha has three main functions:
      - it - Run one individual assertion 
      - describe - Group together 'it' functions (testing the same class)
      - beforeEach - Execute some general setup code
@@ -195,7 +194,7 @@
            car = new Car(); 
         });
       
- - Remove 'const car = new Car();' from the 'it' statements
+ - Remove `const car = new Car();` from the `it` statements
 
 
 
