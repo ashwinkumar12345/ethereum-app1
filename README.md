@@ -15,6 +15,7 @@
 **[Fetching Accounts from Ganache](#fetchingaccountsfromganache)**<br>
 **[Refactor to Async Await](#asyncawait)**<br>
 **[Use one of the Accounts to Deploy to Ganache](#useonetheofaccountstodeploytoganache)**<br>
+**[Asserting Deployment](#assertingdeployment)**<br>
 
 <a name="contractdeployment"></a>
 > ## Contract Deployment 
@@ -160,7 +161,8 @@
 - The provider is connecting to the Ganache (local) N/W
 - To connect to the Rinkeby test N/W, replace the ganache provider with the Rinkeby provider
  
-       const web3 = new Web3(ganache.provider());
+       const provider = ganache.provider();
+       const web3 = new Web3(provider);
 
 <a name="introtomocha"></a>
 > ## Intro to Mocha
@@ -295,6 +297,8 @@
                   //tells web3 to send this transaction to deploy this contract from the specified account 
                   //inbox is the Javascript representation of the contract
                   //we can use it as an object and call functions it that correspond to the original source of the contract
+                  
+          inbox.setProvider(provider);
       });
       describe('Inbox', () => {
          
@@ -309,10 +313,43 @@
 
 - You will see the deployed contract
 
+<a name="assertingdeployment"></a>
+> ## Asserting Deployment
 
+- The inbox object should be assigned an address for us to know that the inbox contract has been deployed successfully to Ganache
 
+      describe('Inbox', () => {
+         
+       it('deploys a contract', () => {
+         assert.ok(inbox.options.address); //If address exists the contract is deployed
+            });
+      });
+      
+- Open your terminal and run:
+  
+      npm run test
  
+ - Make sure deployment test passes correctly
  
+ <a name="verifyingtheinitialmessage"></a>
+> ## Verifying the Initial Message
+
+- We need to make sure that when we create a contract, it is initialized with a message
+
+      describe('Inbox', () => {
+         
+       it('has a default message', async () => {
+            const message = await inbox.methods.message().call() 
+            //methods contains all public functions in our contract, we are referencing the message function, the message function does               not require any arguments, the call() is only retrieving the message and not modifying the data
+            assert.equal(message, 'Hi there!');
+            });
+      });
+      
+- Open your terminal and run:
+  
+      npm run test
+ 
+ - Make sure the inital message test passes successfully
       
  
 
