@@ -236,7 +236,7 @@
 - You will see a listing of 10 accouunts
 - These accounts are all unlocked so we can use any of them to deploy contracts, send ether, call a function in a contract, and so on
 
-> ## Refactor to Aync Await
+> ## Refactor to Async Await
 
 - Rather than using .then (promises), we can use `async await` syntax to clean up the code
   
