@@ -289,9 +289,12 @@
              
           //Use one of the accounts to deploy to Ganache
              
-          inbox = await new web3.eth.Contract(JSON.parse(interface))
-                  .deploy({data: byetcode, arguments: ['Hi there!'] })
-                  .send({ from: accounts[0], gas: '1000000' })
+          inbox = await new web3.eth.Contract(JSON.parse(interface)) //tells web3 that there is a contract with this interface (ABI)
+                  .deploy({data: byetcode, arguments: ['Hi there!'] }) //tells web3 we want to deploy this contract with this argument
+                  .send({ from: accounts[0], gas: '1000000' }) 
+                  //tells web3 to send this transaction to deploy this contract from the specified account 
+                  //inbox is the Javascript representation of the contract
+                  //we can use it as an object and call functions it that correspond to the original source of the contract
       });
       describe('Inbox', () => {
          
