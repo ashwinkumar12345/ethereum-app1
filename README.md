@@ -7,9 +7,9 @@
 
 > ## Boilerplate Design Goals
 
-- Need to write Solidity code in a Javascript project: Setup a Solidity compiler to output the ABI
-- Need to rapidly test contracts in an automated way: Setup Mocha test runner 
-- Need to deploy the contract to a public N/W (Rinkeby): Setup a deploy script to compile the contract and take the compiled bytecode and deploy it to the Rinkeby N/W
+- Need to write Solidity code in a Javascript project - Setup a Solidity compiler to output the ABI
+- Need to rapidly test contracts in an automated way - Setup Mocha test runner 
+- Need to deploy the contract to a public N/W (Rinkeby) - Setup a deploy script to compile the contract and take the compiled bytecode and deploy it to the Rinkeby N/W
 
 > ## Create a new project
 
@@ -48,11 +48,11 @@
       compile.js
       deploy.js
      
-  - contracts - contains the contract source
-  - test - contains a file with Mocha code to test out the contract
-  - package.json - records all dependencies in the project
-  - compile.js - a small script that compiles the contract in the contracts folder
-  - deploy.js - a small script that takes the compiled code and deploys it to the Rinkeby N/W
+  - `contracts` - contains the contract source
+  - `test` - contains a file with Mocha code to test out the contract
+  - `package.json` - records all dependencies in the project
+  - `compile.js` - a small script that compiles the contract in the contracts folder
+  - `deploy.js` - a small script that takes the compiled code and deploys it to the Rinkeby N/W
 
 > ## Syntax Highlighting in Atom
 
@@ -61,13 +61,13 @@
 > ## Compile script
 
 - We need to first start with the compile script because both deploying and testing require a compiled contract
-- Next, we need to pass the contract source to the compiler to output the ABI and bytecode
+- In the compile script, we need to pass the contract source to the Solidity compiler to output the ABI and bytecode
 - Install the Solidity compiler:
 
       npm install --save solc
       
-- To access the Inbox.sol file from compile.js, you need to read the contents of the Inbox.sol file from the harddrive
-- For OS cross compatibility, build a directory path from compile.js to Inbox.sol using the `path` module
+- To access the `Inbox.sol` file from `compile.js`, you need to read the contents of the `Inbox.sol` file from the harddrive
+- For OS cross compatibility, build a directory path from `compile.js` to `Inbox.sol` using the `path` module:
 
       const path = require('path');
       const fs = require('fs');
@@ -128,11 +128,11 @@
 - Setup the provider
 - Provider is the communication layer between the web3 library and Ethereum N/W (Ganache)
 - Provider has a specific set of methods that allow the web3 library to send a request to a local N/W and recieve a request from the N/W
-- web3 will always communicate to an Ethereum N/W through a provider
+- web3 always communicates with an Ethereum N/W through a provider
 - web3 will always expect you to provide a 'provider'
 - Without a provider, web3 will have no idea what N/W to connect to
 - Open the `Inbox.test.js` file and add the provider
-- The provider is connecting to the ganache (local) N/W
+- The provider is connecting to the Ganache (local) N/W
 - To connect to the Rinkeby test N/W, replace the ganache provider with the Rinkeby provider
  
        const web3 = new Web3(ganache.provider());
@@ -198,7 +198,7 @@
 
 > ## Mocha Structure
 
-- Mocha Starts (starts excuting Inbox.test.js)
+- Mocha Starts (starts excuting `Inbox.test.js`)
 - In the test code, we take the contract bytecode and deploy it to the local test N/W (Ganache) - `beforeEach`
 - Write some code to manipulate the contract, for example, change the message - `it`
 - Write an assertion to make our updated message is persisted in the contract - `it`
@@ -238,7 +238,7 @@
 
 > ## Refactor to Aync Await
 
-- Rather than using .then (promises), we can use async await syntax to clean up the code
+- Rather than using .then (promises), we can use `async await` syntax to clean up the code
   
          let accounts;
          beforeEach(async () => {
