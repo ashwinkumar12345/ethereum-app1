@@ -27,7 +27,7 @@
       npm init
       {Hit enter a few times to accept the defaults}
       
-- You should see a new 'package.json' file:
+- You should see a new `package.json` file:
 
       ls
       {package.json}
@@ -48,26 +48,26 @@
       compile.js
       deploy.js
      
-- contracts - contains the contract source
-- test - contains a file with Mocha code to test out the contract
-- package.json - records all dependencies in the project
-- compile.js - a small script that compiles the contract in the contracts folder
-- deploy.js - a small script that takes the compiled code and deploys it to the Rinkeby N/W
+  - contracts - contains the contract source
+  - test - contains a file with Mocha code to test out the contract
+  - package.json - records all dependencies in the project
+  - compile.js - a small script that compiles the contract in the contracts folder
+  - deploy.js - a small script that takes the compiled code and deploys it to the Rinkeby N/W
 
 > ## Syntax Highlighting in Atom
 
-- Install 'language-ethereum' plugin in Atom
+- Install `language-ethereum` plugin in Atom
 
 > ## Compile script
 
-- First start with the compile script because both deploying and testing require a compiled contract
-- Pass the contract source to the compiler to output the ABI and bytecode
+- We need to first start with the compile script because both deploying and testing require a compiled contract
+- Next, we need to pass the contract source to the compiler to output the ABI and bytecode
 - Install the Solidity compiler:
 
       npm install --save solc
       
 - To access the Inbox.sol file from compile.js, you need to read the contents of the Inbox.sol file from the harddrive
-- For OS cross compatibility, build a directory path from compile.js to Inbox.sol using the 'path' module
+- For OS cross compatibility, build a directory path from compile.js to Inbox.sol using the `path` module
 
       const path = require('path');
       const fs = require('fs');
@@ -142,7 +142,7 @@
 - Mocha is a general-purpose test running framework
 - Mocha has three main functions:
      - it - Run one individual assertion 
-     - describe - Group together 'it' functions (testing the same class)
+     - describe - Group together `it` functions (testing the same class)
      - beforeEach - Execute some general setup code
 - Sample class
  
@@ -195,6 +195,86 @@
         });
       
  - Remove `const car = new Car();` from the `it` statements
+
+> ## Mocha Structure
+
+- Mocha Starts (starts excuting Inbox.test.js)
+- In the test code, we take the contract bytecode and deploy it to the local test N/W (Ganache) - `beforeEach`
+- Write some code to manipulate the contract, for example, change the message - `it`
+- Write an assertion to make our updated message is persisted in the contract - `it`
+- Deploy a fresh new contract and manipulate the contract and assert repeatedly for all test cases
+- The ganache module automatically creates a set of accounts that we can use (in an unlocked state)
+
+> ## Fetching Accounts from Ganache
+
+- Freely send or receive ether from unlocked accounts
+- Open your `Inbox.test.js` file:
+  
+         beforeEach(() => {
+         
+         //Get a list of all accounts
+         
+         web3.eth.getAccounts().then(fetchedAccounts => {
+             console.log(fetchedAccounts);
+         });
+         
+         //Use one of those accounts to deploy the contract
+         
+         });
+         
+         describe('Inbox', () => {
+         
+            it('deploys a contract', () => {
+            });
+         });
+         
+- Save the file and run it from the terminal 
+- Inside the `Inbox` directory, run:
+  
+       npm run test
+    
+- You will see a listing of 10 accouunts
+- These accounts are all unlocked so we can use any of them to deploy contracts, send ether, call a function in a contract, and so on
+
+> ## Refactor to Aync Await
+
+- Rather than using .then (promises), we can use async await syntax to clean up the code
+  
+         let accounts;
+         beforeEach(async () => {
+             accounts = await web3.eth.getAccounts();
+         });
+   
+> ## Use one the Accounts to Deploy to Ganache
+
+- Require in the ABI and bytecode from the `compile.js` script
+  
+         const { interface, bytecode } = require('../compile.js');
+
+- Deploy the contract with one of the accounts:
+  
+         let inbox;
+         beforeEach(async () => {
+             accounts = await web3.eth.getAccounts();
+             
+             //Use one of the accounts to deploy to Ganache
+             
+             inbox = await new web3.eth.Contract(JSON.parse(interface))
+                  .deploy({data: byetcode, arguments: ['Hi there!'] })
+                  .send({ from: accounts[0], gas: '1000000' })
+         });
+         describe('Inbox', () => {
+         
+            it('deploys a contract', () => {
+            console.log('inbox');
+            });
+         });
+
+- Open your terminal and run:
+  
+         npm run test
+
+- You will see the deployed contract
 
 
 
