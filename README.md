@@ -18,6 +18,10 @@
 **[Asserting Deployment](#assertingdeployment)**<br>
 **[Verifying the Initial Message](#verifyingtheinitialmessage)**<br>
 **[Testing Message Updates](#testingmessageupdates)**<br>
+**[Deployment to Rinkeby](#deploymenttorinkeby)**<br>
+**[Infura Signup](#infurasignup)**<br>
+**[Wallet Provider Setup](#walletprovidersetup)**<br>
+**[Observing Deployment on Etherscan](#observingdeploymentonetherscan)**<br>
 
 <a name="contractdeployment"></a>
 > ## Contract Deployment 
@@ -385,7 +389,86 @@
 - You want to now deploy the inbox contract to a real network (rinkeby) as opposed to a local test network
 - To deploy the contract to the Rinkeby network, you need to have an account with some amount of ether on the Rinkeby network
 - You'll use your 12-word account mnemonic that you created earlier 
-- You also need to connect to some node on the Rinkeby network, for this you can use the Infura public API
+- You also need to connect to some node on the Rinkeby network, for this you can either host an Ethereum Now or use the Infura public API
+
+  <a name="infurasignup"></a>
+  > ## Infura Signup
+
+- Go to infura.io
+- Click the Get Started for Free button
+- Create a new account
+- Verify your email
+- Go to your dashboard
+- Click Create a New Project with any name - 'Rinkeby API'
+- Go to Endpoint and select Rinkeby in the dropdown
+- Copy the endpoint link
+
+  <a name="walletprovidersetup"></a>
+  > ## Wallet Provider Setup
+
+- Open your terminal inside your Inbox directory:
+  
+      npm install --save truffle-hdwallet-provider@0.0.3
+      
+- The provider is how the web3 instance talks to a specific network
+- Under the root directory, create a new file called deploy.js with the following code:
+  
+      const HDWalletProvider = require('truffle-hdwallet-provider');
+      const Web3 = require('web3');
+      const { interface, bytecode } = require('./compile');
+      
+      const provider = new HDWalletProvider(
+            '//type in your 12-word mnemonic here',
+            '//copy your infura endpoint link'
+            );
+      
+      const web3 = new Web3(provider); 
+      
+      const deploy = async() => {
+            const accounts = await web3.eth.getAccounts();
+            
+            console.log('Attempting to deploy contract from account', accounts[0]);
+            
+            const result = await new web3.eth.Contract(JSON.parse(interface))
+                  .deploy({ data: bytecode, arguments: ['Hi there'] });
+                  .send({ gas: '1000000', from: accounts[0] }); 
+                  
+            console.log('Contract deployed to', result.options.address);
+      };
+      deploy();
+      
+- Open your terminal inside your Inbox directory:
+  
+      node deploy.js
+      //It will take some time for deployment to any real network
+      ...
+      
+      Attempting to deploy from account XXX
+      Contract deployed to XXX
+      
+ <a name="observingdeploymentonetherscan"></a>
+> ## Observing Deployment on Etherscan
+
+- Go to rinkeby.etherscan.io
+- Copy paste the deployed address from your terminal into the search bar
+- Click Go
+- Observe your contract details
+
+ <a name="observingdeploymentonetherscan"></a>
+> ## Deployed Contracts in Remix
+
+- Open your browser and open Remix code editor
+- In the Environment tab, select Injected Web3
+- Your account is automatically selected
+- Paste in the address where your contract is deployed and click At Address
+- Add in a new message and click setMessage
+- You will see a browser pop up from metamask to confirm the transaction as this costs ether
+- Click Submit
+- It will take 15 to 20 sec to change data in a real network
+- You can see the message update by clicking message
+- The contents of the message variable is now changed on the blockchain
+
+
       
  
 
