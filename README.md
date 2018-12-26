@@ -22,6 +22,7 @@
 **[Infura Signup](#infurasignup)**<br>
 **[Wallet Provider Setup](#walletprovidersetup)**<br>
 **[Observing Deployment on Etherscan](#observingdeploymentonetherscan)**<br>
+**[Deployed Contracts in Remix](#deployedcontractsinremix)**<br>
 
 <a name="contractdeployment"></a>
 > ## Contract Deployment 
@@ -454,7 +455,7 @@
 - Click Go
 - Observe your contract details
 
- <a name="observingdeploymentonetherscan"></a>
+ <a name="deployedcontractsinremix"></a>
 > ## Deployed Contracts in Remix
 
 - Open your browser and open Remix code editor
