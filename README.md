@@ -16,12 +16,14 @@
 **[Refactor to Async Await](#asyncawait)**<br>
 **[Use one of the Accounts to Deploy to Ganache](#useonetheofaccountstodeploytoganache)**<br>
 **[Asserting Deployment](#assertingdeployment)**<br>
+**[Verifying the Initial Message](#verifyingtheinitialmessage)**<br>
+**[Testing Message Updates](#testingmessageupdates)**<br>
 
 <a name="contractdeployment"></a>
 > ## Contract Deployment 
 
 - Create a custom node project from scratch
-- This project is used for contract creation, local testing, and deployment to the Rinkeby N/W
+- You can use this project for contract creation, local testing, and deployment to the Rinkeby N/W
 
 <a name="boilerplate"></a>
 > ## Boilerplate Design Goals
@@ -83,13 +85,13 @@
 <a name="compilescript"></a>
 > ## Compile Script
 
-- We need to first start with the compile script because both deploying and testing require a compiled contract
-- In the compile script, we need to pass the contract source to the Solidity compiler to output the ABI and bytecode
+- You need to first start with the compile script because both deploying and testing require a compiled contract
+- In the compile script, pass the contract source to the Solidity compiler to output the ABI and bytecode
 - Install the Solidity compiler:
 
       npm install --save solc
       
-- To access the `Inbox.sol` file from `compile.js`, you need to read the contents of the `Inbox.sol` file from the harddrive
+- To access the `Inbox.sol` file from `compile.js`, you would need to read the contents of the `Inbox.sol` file from the harddrive
 - For OS cross compatibility, build a directory path from `compile.js` to `Inbox.sol` using the `path` module:
 
       const path = require('path');
@@ -101,7 +103,7 @@
       
       console.log(solc.compile(source, 1)); //This logs the compiled output
       
- - Open the terminal inside the inbox directory and run:
+ - Open your terminal inside the inbox directory and run:
  
        node compile.js
        
@@ -128,9 +130,9 @@
 <a name="testingarchitecture"></a>
 > ## Testing Architecture
 
-- We need to take the bytecode from the Solidity compiler and deploy it to a local test Ethereum N/W
+- You need to now take the bytecode from the Solidity compiler and deploy it to a local test Ethereum N/W
 - The local test N/W is created by a library called Ganache
-- We need to take the ABI and feed it to web3
+- You need to take the ABI and feed it to web3
 - web3 is the portal into the test Ethereum N/W
 
 <a name="installingtestingmodules"></a>
@@ -223,14 +225,15 @@
         });
       
  - Remove `const car = new Car();` from the `it` statements
+ - Delete the code for this section before proceeding
 
 <a name="mochastructure"></a>
 > ## Mocha Structure
 
-- Mocha Starts (starts excuting `Inbox.test.js`)
-- In the test code, we take the contract bytecode and deploy it to the local test N/W (Ganache) - `beforeEach`
+- Mocha Starts (executes `Inbox.test.js`)
+- In the test code, you need to take the contract bytecode and deploy it to the local test N/W (Ganache) - `beforeEach`
 - Write some code to manipulate the contract, for example, change the message - `it`
-- Write an assertion to make our updated message is persisted in the contract - `it`
+- Write an assertion to make sure the updated message is persisted in the contract - `it`
 - Deploy a fresh new contract and manipulate the contract and assert repeatedly for all test cases
 - The ganache module automatically creates a set of accounts that we can use (in an unlocked state)
 
@@ -334,7 +337,7 @@
  <a name="verifyingtheinitialmessage"></a>
 > ## Verifying the Initial Message
 
-- We need to make sure that when we create a contract, it is initialized with a message
+- You need to make sure that when you create a contract, it is initialized with a message
 
       describe('Inbox', () => {
          
@@ -350,6 +353,39 @@
       npm run test
  
  - Make sure the inital message test passes successfully
+ 
+  <a name="testingmessageupdates"></a>
+ > ## Testing Message Updates
+
+- You need to test the setMessage function to make sure the message changes correctly
+- For this you need to first create a new instance of the contract (this is already being done in the beforeEach section)
+- Modify the message by calling setMessage
+- Retrieve the message again and make sure it's the new one
+         
+       it('can change message', async () => {
+       
+            await inbox.methods.setMessage('bye').send({ from:accounts[0] })
+            //send is used for sending a transaction to the N/W and so we have to specify the account to be used 
+            //when we send a transaction we get back the transaction hash
+            
+            const message = await inbox.methods.message().call();
+            assert.equal(message, 'bye');
+            });
+      });
+      
+- Open your terminal and run:
+  
+      npm run test
+ 
+ - Make sure the set message test passes successfully
+ 
+  <a name="deploymenttorinkeby"></a>
+  > ## Deployment to Rinkeby
+
+- You want to now deploy the inbox contract to a real network (rinkeby) as opposed to a local test network
+- To deploy the contract to the Rinkeby network, you need to have an account with some amount of ether on the Rinkeby network
+- You'll use your 12-word account mnemonic that you created earlier 
+- You also need to connect to some node on the Rinkeby network, for this you can use the Infura public API
       
  
 
