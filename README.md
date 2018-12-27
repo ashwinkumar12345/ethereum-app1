@@ -28,7 +28,7 @@
 > ## Contract Deployment 
 
 - Create a custom node project from scratch
-- You can use this project for contract creation, local testing, and deployment to the Rinkeby N/W
+- You can use this project for contract creation, local testing, and deployment to the Rinkeby network
 
 <a name="boilerplate"></a>
 > ## Boilerplate Design Goals
