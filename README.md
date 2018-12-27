@@ -392,8 +392,8 @@
 - You'll use your 12-word account mnemonic that you created earlier 
 - You also need to connect to some node on the Rinkeby network, for this you can either host an Ethereum Now or use the Infura public API
 
-  <a name="infurasignup"></a>
-  > ## Infura Signup
+<a name="infurasignup"></a>
+> ## Infura Signup
 
 - Go to infura.io
 - Click the Get Started for Free button
@@ -404,8 +404,8 @@
 - Go to Endpoint and select Rinkeby in the dropdown
 - Copy the endpoint link
 
-  <a name="walletprovidersetup"></a>
-  > ## Wallet Provider Setup
+<a name="walletprovidersetup"></a>
+> ## Wallet Provider Setup
 
 - Open your terminal inside your Inbox directory:
   
