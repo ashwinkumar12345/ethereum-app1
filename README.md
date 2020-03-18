@@ -27,15 +27,14 @@
 <a name="contractdeployment"></a>
 > ## Contract Deployment 
 
-- Create a custom node project from scratch
-- You can use this project for contract creation, local testing, and deployment to the Rinkeby network
+Create a custom node project from scratch. You can use this project for contract creation, local testing, and deployment to the Rinkeby network.
 
 <a name="boilerplate"></a>
 > ## Boilerplate Design Goals
 
-- Need to write Solidity code in a Javascript project - Setup a Solidity compiler to output the ABI
-- Need to rapidly test contracts in an automated way - Setup Mocha test runner 
-- Need to deploy the contract to a public N/W (Rinkeby) - Setup a deploy script to compile the contract and take the compiled bytecode and deploy it to the Rinkeby N/W
+Need to write Solidity code in a Javascript project: set up a Solidity compiler to output the ABI.
+Need to rapidly test contracts in an automated way: set up Mocha test runner. 
+Need to deploy the contract to a public network (Rinkeby): set up a deploy script to compile the contract and take the compiled bytecode and deploy it to the Rinkeby network.
 
 <a name="createanewproject"></a>
 > ## Create a new project
@@ -62,11 +61,11 @@
 <a name="projectfilewalkthrough"></a>
 > ## Project File Walkthrough
 
-- Open Atom code editor in the Inbox directory:
+Open Atom code editor in the Inbox directory:
 
       atom .
       
-- Create the following directory structure:
+Create the following directory structure:
 
       contracts 
         Inbox.sol {Copy the Inbox.sol code from Remix here}
@@ -85,13 +84,13 @@
 <a name="syntaxhighlighting"></a>
 > ## Syntax Highlighting in Atom
 
-- Install `language-ethereum` plugin in Atom
+Install `language-ethereum` plugin in Atom.
 
 <a name="compilescript"></a>
 > ## Compile Script
 
-- You need to first start with the compile script because both deploying and testing require a compiled contract
-- In the compile script, pass the contract source to the Solidity compiler to output the ABI and bytecode
+You need to first start with the compile script because both deploying and testing require a compiled contract. In the compile script, pass the contract source to the Solidity compiler to output the ABI and bytecode.
+
 - Install the Solidity compiler:
 
       npm install --save solc
@@ -133,21 +132,21 @@
        module.exports = solc.compile(source, 1).contracts[':Inbox'];
 
 <a name="testingarchitecture"></a>
-> ## Testing Architecture
+> ## Testing architecture
 
-- You need to now take the bytecode from the Solidity compiler and deploy it to a local test Ethereum N/W
-- The local test N/W is created by a library called Ganache
-- You need to take the ABI and feed it to web3
-- web3 is the portal into the test Ethereum N/W
+You need to now take the bytecode from the Solidity compiler and deploy it to a local test Ethereum network.
+The local test network is created by a library called Ganache.
+You need to take the ABI and feed it to web3.
+web3 is the portal into the test Ethereum network.
 
 <a name="installingtestingmodules"></a>
 > ## Installing Testing Modules
 
-- Open your terminal in the Inbox directory
+Open your terminal in the Inbox directory:
  
        npm install --save mocha ganache-cli web3@1.0.0-beta.35
 
-- Open the `Inbox.test.js` file and import the following:
+Open the `Inbox.test.js` file and import the following:
  
        const assert = require('assert');
        const ganache = require('ganache-cli');
